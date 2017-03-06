@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infra.CrossCuting.IoC
+namespace Infra.Data.Identity
 {
     public class Class1
     {
