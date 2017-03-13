@@ -101,7 +101,7 @@
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infra.CrossCuting.Identity\Infra.CrossCuting.Identity.csproj">
-      <Project>{62BE4FA6-025D-4D08-A743-CD8ED7E123BF}</Project>
+      <Project>{62be4fa6-025d-4d08-a743-cd8ed7e123bf}</Project>
       <Name>Infra.CrossCuting.Identity</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infra.Data.Identity\Infra.Data.Identity.csproj">

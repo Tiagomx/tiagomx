@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;   
 
 namespace ProjetosTiagomx.Controllers
 {
@@ -10,6 +11,8 @@ namespace ProjetosTiagomx.Controllers
     {
         public ActionResult Index()
         {
+            string error = "";
+            Debug.Write(error);
             return View();
         }
 
