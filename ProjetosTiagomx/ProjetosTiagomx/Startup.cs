@@ -1,7 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using ProjetosTiagomx;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ProjetosTiagomx.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace ProjetosTiagomx
 {
     public partial class Startup

@@ -26,7 +26,7 @@ namespace ProjetosTiagomx.App_Start
             // Feito fora da camada de IoC para não levar o System.Web para fora
             container.Register(() =>
             {
-                if (HttpContext.Current != null && HttpContext.Current.Items["owin.Environment"] == null && container.IsVerifying == false)
+                if (HttpContext.Current != null && HttpContext.Current.Items["owin.Environment"] == null && container.IsVerifying == true)
                 {
                     return new OwinContext().Authentication;
                 }
