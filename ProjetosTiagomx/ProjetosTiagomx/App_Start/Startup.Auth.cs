@@ -8,6 +8,7 @@ using Owin;
 using Microsoft.Owin.Security.DataProtection;
 using System.Web.Mvc;
 using Infra.CrossCuting.Identity.Model;
+using Infra.CrossCuting.Identity.Configuration;
 
 namespace ProjetosTiagomx
 {
