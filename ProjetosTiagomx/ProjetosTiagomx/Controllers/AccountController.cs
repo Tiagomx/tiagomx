@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using Infra.CrossCuting.Identity.Model;
 using Infra.CrossCuting.Identity.Configuration;
 
+
 namespace ProjetosTiagomx.Controllers
 {
     [Authorize]

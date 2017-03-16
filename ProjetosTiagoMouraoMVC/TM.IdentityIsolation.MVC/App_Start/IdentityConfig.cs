@@ -10,10 +10,9 @@
 //using Microsoft.AspNet.Identity.Owin;
 //using Microsoft.Owin;
 //using Microsoft.Owin.Security;
-//using Infra.CrossCuting.Identity.Model;
-//using Infra.CrossCuting.Identity.Context;
+//using TM.IdentityIsolation.MVC.Models;
 
-//namespace ProjetosTiagomx
+//namespace TM.IdentityIsolation.MVC
 //{
 //    public class EmailService : IIdentityMessageService
 //    {

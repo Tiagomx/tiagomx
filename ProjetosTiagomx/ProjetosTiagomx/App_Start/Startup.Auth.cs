@@ -1,14 +1,13 @@
 ﻿using System;
+using System.Web.Mvc;
+using Infra.CrossCuting.Identity.Configuration;
+using Infra.CrossCuting.Identity.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
-using Owin;
 using Microsoft.Owin.Security.DataProtection;
-using System.Web.Mvc;
-using Infra.CrossCuting.Identity.Model;
-using Infra.CrossCuting.Identity.Configuration;
+using Owin;
 
 namespace ProjetosTiagomx
 {
