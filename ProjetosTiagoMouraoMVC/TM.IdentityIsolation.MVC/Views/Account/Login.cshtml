@@ -11,19 +11,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>WebApplication</title>
+    <title>Tmx Soluções</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/skins/_all-skins.min.css" rel="stylesheet" />
     <link href="~/Content/Login Content/bootstrap.min.css" rel="stylesheet" />
-
     <link href="~/Content/Login Content/font-awesome.min.css" rel="stylesheet" />
-
     <link href="~/Content/Login Content/ionicons.min.css" rel="stylesheet" />
-
     <link href="~/Content/Login Content/admin-lte.min.css" rel="stylesheet" />
 
-    <link href="~/Content/Login Content/all.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,21 +34,21 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="@Url.Action("DashboardV1", "Home")">Welcome to <b>WebApplication!</b></a>
+            <p>Bem Vindo</p>
         </div>
         <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg">Faça seu login</p>
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group has-feedback">
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "E-mail" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Password" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password", placeholder = "Senha" })
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
@@ -56,27 +56,27 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+                            @Html.Label("Lembrar me ?")
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                     </div>
                 </div>
             }
             <div class="social-auth-links text-center">
-                <p>- OR -</p>
+                <p>- OU -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat">
-                    <i class="fa fa-facebook"></i> Sign in using
+                    <i class="fa fa-facebook"></i> Entrar usando
                     Facebook
                 </a>
                 <a href="#" class="btn btn-block btn-social btn-google btn-flat">
-                    <i class="fa fa-google-plus"></i> Sign in using
+                    <i class="fa fa-google-plus"></i> Entrar usando
                     Google+
                 </a>
             </div>
-            <a href="#">I forgot my password</a><br>
-            <a href="@Url.Action("Register", "Account")" class="text-center">Register as a new user</a>
+            <a href="#">Esqueci a senha</a><br>
+            <a href="@Url.Action("Register", "Account")" class="text-center">Registar novo usuário</a>
         </div>
     </div>
 
@@ -95,3 +95,24 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<style>
+
+
+    .login-page, .register-page {
+   background: url(../Images/PayPal-Training-Room.jpg) no-repeat center center fixed; 
+   -webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	background-color: #fff;
+}
+
+    .login-box-body, .register-box-body {
+    background: rgba(221, 221, 221, 0.9);
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+   
+}
+</style>
