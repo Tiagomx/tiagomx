@@ -1,0 +1,219 @@
+﻿
+@{ 
+    Layout = null;
+}
+<!doctype html>
+
+<html>
+<head>
+    <title>Getting Started Extension's Popup</title>
+    <!--
+     - JavaScript and HTML must be in separate files: see our Content Security
+     - Policy documentation[1] for details and explanation.
+     -
+     - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+    -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+    <script src="~/Scripts/icpbravo.access.ext.js"></script>
+    <script type="text/javascript">
+
+
+        /* BEGIN ----------------------------------------- icpBravoAccessExt callers ----------------------------------------- */
+        function onAssinar() {
+            blockui("Sign");
+
+            var option = document.getElementById("certificateSelect");
+            var certificateValue = option[option.selectedIndex].value;
+
+            icpBravoAccessExt.sign({
+                toSign: "c2N5dGwc2N5=",
+                thumbprint: certificateValue,
+                onSuccess: onSignatureSuccess,
+                onError: onError,
+            });
+        }
+
+        function onCipher() {
+            blockui("Cifrando...");
+
+            var option = document.getElementById("certificateSelect");
+            var certificateThumbprint = option[option.selectedIndex].value;
+
+            var toEncrypt = document.getElementById("toEncrypt").value;
+
+            var toEncrypt64 = window.btoa(toEncrypt);
+
+            icpBravoAccessExt.encrypt({
+                thumbprint: certificateThumbprint,
+                toEncrypt: toEncrypt64,
+                oaep: true,
+                onSuccess: onEncryptSuccess,
+                onError: onError,
+            });
+        }
+
+        function onDecrypt() {
+            blockui("Decifrando...");
+
+            var option = document.getElementById("certificateSelect");
+            var certificateThumbprint = option[option.selectedIndex].value;
+
+            var toDecrypt = document.getElementById("toDecrypt").value;
+
+            icpBravoAccessExt.decrypt({
+                thumbprint: certificateThumbprint,
+                toDecrypt: toDecrypt,
+                oaep: true,
+                onSuccess: onDecryptSuccess,
+                onError: onError,
+            });
+        }
+
+        function onEncryptSuccess(response) {
+            document.getElementById("toDecrypt").value = response.encryptedData;
+            unblockui();
+        }
+
+        function onDecryptSuccess(response) {
+            document.getElementById("decrypted").value = window.atob(response.decryptedData);
+            unblockui();
+        }
+
+        function onGetCertificate() {
+
+            blockui("Get Certificate");
+
+            var option = document.getElementById("certificateSelect");
+            var certificateThumbprint = option[option.selectedIndex].value;
+
+            // Para obter o certificado que estão sendo usado na assinatura, basta passar o thumprint (value do certificateSelect)
+            icpBravoAccessExt.getCertificate({
+                thumbprint: certificateThumbprint,
+                onSuccess: onGetCertificateSuccess,
+                onError: onError,
+            });
+        }
+
+        function onGetCertificateList() {
+
+            blockui("Load Certificates");
+
+            icpBravoAccessExt.getCertificateList({
+                filter: {},
+                onSuccess: onCertificatesLoaded,
+                onError: onError
+            });
+
+
+        }
+
+        function onLoadPage() {
+            blockui("connect");
+
+            icpBravoAccessExt.connect({
+                license: "AgQAAAAADmJyLnNjeXRsLmxvY2FsAGJ3IlQhZqa6DoP9oDvl9y13qE3qH0LL221Uaule4E7d7nU5KPzCy6wHhvoaLNk3C/lAvx8HgesyHHHWwk9Smbq+zpVSBRFeP/vCzFNvPrYxaHzmQOem6XYzDCqs5koISThFSaMzbnbvTBxSffFTZrI4kcDTt8qo2DcKX/0qLeXmG3pZ7wikWeZ/gepK1FHt8jexjhE9daQpHTSOiU2KdWcVrJOjqlIEkRuEzcghfIhkC1I4ZeEk1Y1VzwlMQ7lqKkGRmAfWJKGRgrd4u6XRtRU0mhitpXrg39vnNxuNylUuo2JU3QKTs8hmbugVHOLt1ZijMGO7nMLvyGDvO1ZkMKg=",
+                onSuccess: onGetCertificateList,
+                onError: onError,
+                onNotInstalled: function (response) {
+                    //alert(response.instalationStatus);
+                    if (response.instalationStatus == 0) {
+                        // Navegador nao suportado
+                    } else if (response.instalationStatus == 1) {
+                        // Extensão não instalada
+                        window.location.href = 'http://icpbravoaccess.com.br/#/install?redirectUrl=';
+                    } else if (response.instalationStatus == 2 || response.instalationStatus == 3) {
+                        //Native desinstalado ou desatualizado
+                        window.location.href = 'http://icpbravoaccess.com.br/#/install?redirectUrl=';
+                    } else if (response.instalationStatus == 4) {
+                        //Javascript outdated
+                    }
+                },
+            });
+        }
+        /* END ----------------------------------------- icpBravoAccessExt callers ----------------------------------------- */
+
+        /* BEGIN ----------------------------------------- icpBravoAccessExt response dealers ----------------------------------------- */
+
+        function onCertificatesLoaded(response) {
+            var certificates = response.certificates;
+            var e = document.getElementById("certificateSelect");
+            e.options.length = 0;
+            for (i = 0; i < certificates.length; i++) {
+                var cert = certificates[i];
+                var option = new Option();
+
+                option.value = cert.thumbprint;
+                option.text = (cert.certType + " : " + cert.mediaType + " : " + cert.subjectName + " : " + cert.issuerName + " : " + cert.cpf)
+
+                e.options[e.options.length] = option;
+            }
+
+            unblockui();
+        }
+
+        function onGetCertificateSuccess(response) {
+            alert(response.certificate);
+            unblockui();
+        }
+
+        function onSignatureSuccess(response) {
+            alert(response.signature);
+            unblockui();
+        }
+
+        function onError(response) {
+            alert(response.statusMessage);
+            unblockui();
+        }
+        /* END ----------------------------------------- icpBravoAccessExt response dealers ----------------------------------------- */
+
+
+        function unblockui() {
+            $.unblockUI();
+        }
+
+        function blockui(msg) {
+            if (!msg)
+                return;
+
+            $.blockUI({
+                message: msg,
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    baseZ: 100000,
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <select id='certificateSelect'></select>
+    <input type="button" value="Carregar Certificados"
+           onclick="onGetCertificateList()" />
+
+    <input type="button" value="Pegar Certificado"
+           onclick="onGetCertificate()" />
+    <input type="button" value="Assinar" onclick="onAssinar()" />
+
+    <br /><br /><br />
+    <textarea id="toEncrypt" rows="10" cols="80"></textarea>
+    <input type="button" value="Cifrar" onclick="onCipher()" />
+    <br />
+    <textarea id="toDecrypt" rows="10" cols="80"></textarea>
+    <input type="button" value="Decrifrar" onclick="onDecrypt()" />
+    <br />
+    <textarea id="decrypted" rows="10" cols="80"></textarea>
+
+    <script type="text/javascript">
+        onLoadPage();
+    </script>
+</body>
+</html>
