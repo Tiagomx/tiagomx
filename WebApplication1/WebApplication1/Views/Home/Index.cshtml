@@ -16,19 +16,33 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="~/Scripts/jquery.blockUI.js"></script>
     <script src="~/Scripts/icpbravo.access.ext.js"></script>
+  
+    
+ @{ 
+     using (WebApplication1.cni.servClient cni = new WebApplication1.cni.servClient())
+     {
+         string challenge = cni.challenge_generator().retorno.info.challenge;
+
+         ViewBag.challenger = challenge;
+     }
+ }
+
+   
     <script type="text/javascript">
 
+     
 
         /* BEGIN ----------------------------------------- icpBravoAccessExt callers ----------------------------------------- */
         function onAssinar() {
             blockui("Sign");
-
+           
             var option = document.getElementById("certificateSelect");
             var certificateValue = option[option.selectedIndex].value;
 
             icpBravoAccessExt.sign({
                 toSign: "c2N5dGwc2N5=",
                 thumbprint: certificateValue,
+
                 onSuccess: onSignatureSuccess,
                 onError: onError,
             });
@@ -191,17 +205,75 @@
                 }
             });
         }
+
+        function ICPAutenticar() {
+            blockui("Processando...");
+            var thumbprint = document.getElementById("certificateSelect").value;
+            var challenge = document.getElementById("desafio").value;
+            icpBravoAccessExt.sign({
+                toSign: challenge,
+                thumbprint: thumbprint,
+                onSuccess: function (signature) {
+                    window.signature = signature
+                    icpBravoAccess.getCertificate({
+                        thumbprint: thumbprint,
+                        onSuccess: function (certificate) {
+                            window.certificate = certificate;
+                            var form = document.createElement("form"),
+                                cert = document.createElement("textarea"),
+                                sign = document.createElement("textarea"),
+                                chal = document.createElement("input");
+
+                            form.method = "post"; form.action = arispbravo.authurl;
+                            cert.name = "certificate"; cert.value = window.certificate.certificate;
+                            sign.name = "signature"; sign.value = window.signature.signature;
+                            chal.name = "challenge"; chal.value = arispbravo.challenge;
+
+                            form.appendChild(cert);
+                            form.appendChild(sign);
+                            form.appendChild(chal);
+
+                            tke = document.getElementById("arisp-token-teste");
+                            if (tke) {
+                                var toke = document.createElement("textarea");
+                                toke.name = "token";
+                                toke.value = tke.value;
+                                form.appendChild(toke);
+                            };
+
+                            document.body.appendChild(form);
+                            form.submit();
+                        },
+                        onError: function (a, b, c, d) {
+                            console.log("getCertificate");
+                            console.log(a, b, c, d);
+                        },
+                        // onError : onError,
+                    });
+                },
+                onError: function (a, b, c, d) {
+                    console.log("sign");
+                    console.log(a, b, c, d);
+                },
+                 onError : onError,
+            });
+        };
+
     </script>
 </head>
 <body>
-
+    <div hidden>
+        @Html.TextBox("desafio", (string)@ViewBag.challenger)
+    </div>
+   
+   
     <select id='certificateSelect'></select>
     <input type="button" value="Carregar Certificados"
            onclick="onGetCertificateList()" />
 
     <input type="button" value="Pegar Certificado"
            onclick="onGetCertificate()" />
-    <input type="button" value="Assinar" onclick="onAssinar()" />
+    <input type="button" value="Assinar" onclick="ICPAutenticar()" />
 
     <br /><br /><br />
     <textarea id="toEncrypt" rows="10" cols="80"></textarea>
@@ -215,5 +287,10 @@
     <script type="text/javascript">
         onLoadPage();
     </script>
+
+    <script>
+        var ch = document.getElementById("desafio");     
+    </script>
+
 </body>
 </html>

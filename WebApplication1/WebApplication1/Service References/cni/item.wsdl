@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ax21="http://www.indisponibilidade.org.br/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.indisponibilidade.org.br/wsdl/" targetNamespace="http://www.indisponibilidade.org.br/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <documentation>
+		Please Type your service description here
+	</documentation>
+  <wsdl:types>
+    <xsd:schema xmlns:ax21="http://www.indisponibilidade.org.br/wsdl/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.indisponibilidade.org.br/wsdl/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="instituicao">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="id_instituicao" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="nome" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="matriculas">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="documento" type="xsd:string" />
+          <xsd:element minOccurs="0" name="matricula" type="xsd:string" />
+          <xsd:element minOccurs="0" name="protocolo" type="xsd:string" />
+          <xsd:element minOccurs="0" name="status" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="get_xml_parans">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="data_inicial" type="xsd:string" />
+          <xsd:element minOccurs="0" name="data_final" type="xsd:string" />
+          <xsd:element minOccurs="0" name="visualizado" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="documentos">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="documento" type="xsd:string" />
+          <xsd:element minOccurs="0" name="mensagem" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="protocolos" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="tipoUsuario">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="id_usuario_tipo" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="nome" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="userData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="id_usuario" type="xsd:integer" />
+          <xsd:element minOccurs="0" name="data_cadastro" type="xsd:string" />
+          <xsd:element minOccurs="0" name="rg" type="xsd:string" />
+          <xsd:element minOccurs="0" name="cpf" type="xsd:string" />
+          <xsd:element minOccurs="0" name="nome" type="xsd:string" />
+          <xsd:element minOccurs="0" name="email" type="xsd:string" />
+          <xsd:element minOccurs="0" name="cargo" type="xsd:string" />
+          <xsd:element minOccurs="0" name="ultimo_acesso" type="xsd:string" />
+          <xsd:element minOccurs="0" name="tipo_usuario" type="tns:tipoUsuario" />
+          <xsd:element minOccurs="0" name="instituicao" type="tns:instituicao" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoXMLInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="xml_content" type="xsd:string" />
+          <xsd:element minOccurs="0" name="faultMessage" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoRespondeIndisponibilidadeInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="successMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" name="faultMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="matriculas" type="tns:matriculas" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoPesquisaInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="faultMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" name="documento" type="tns:documentos" />
+          <xsd:element minOccurs="0" name="hash" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" name="challenge" type="xsd:string" />
+          <xsd:element minOccurs="1" name="session_id" type="xsd:string" />
+          <xsd:element minOccurs="1" name="user_data" type="tns:userData" />
+          <xsd:element minOccurs="1" name="xml_content" type="xsd:string" />
+          <xsd:element minOccurs="1" name="successMessage" type="xsd:string" />
+          <xsd:element minOccurs="1" name="faultMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="instituicoes" type="tns:instituicao" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="documentos" type="tns:documentos" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoUserDataInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="user_data" type="tns:userData" />
+          <xsd:element minOccurs="0" name="faultMessage" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoChallengeInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="challenge" type="xsd:string" />
+          <xsd:element minOccurs="1" name="faultMessage" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoConnectInfo">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" name="session_id" type="xsd:string" />
+          <xsd:element minOccurs="1" name="faultMessage" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="instituicoes" type="tns:instituicao" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retorno">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="1" name="info" type="tns:retornoInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoConnect">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoConnectInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoChallenge">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoChallengeInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoUserData">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoUserDataInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoXML">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoXMLInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoPesquisa">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoPesquisaInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="retornoRespondeIndisponibilidade">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="success" type="xsd:boolean" />
+          <xsd:element minOccurs="0" name="info" type="tns:retornoRespondeIndisponibilidadeInfo" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://www.indisponibilidade.org.br/wsdl/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:element name="challenge_generatorResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoChallenge" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="auth">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="challenge" type="xsd:string" />
+            <xsd:element name="signature" type="xsd:string" />
+            <xsd:element name="certificate" type="xsd:string" />
+            <xsd:element name="token" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoConnect" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_user_data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="session_id" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_user_dataResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoUserData" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_xml">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="session_id" type="xsd:string" />
+            <xsd:element name="parans" type="tns:get_xml_parans" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="get_xmlResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoXML" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="responde_indisponibilidade">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="session_id" type="xsd:string" />
+            <xsd:element name="xml_content" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="responde_indisponibilidadeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoRespondeIndisponibilidade" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="pesquisa">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="session_id" type="xsd:string" />
+            <xsd:element name="documento" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="pesquisaResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="retorno" type="tns:retornoPesquisa" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="challenge_generator" />
+  <wsdl:message name="challenge_generatorResponse">
+    <wsdl:part name="retorno" element="tns:challenge_generatorResponse" />
+  </wsdl:message>
+  <wsdl:message name="auth">
+    <wsdl:part name="auth" element="tns:auth" />
+  </wsdl:message>
+  <wsdl:message name="authResponse">
+    <wsdl:part name="retorno" element="tns:authResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_user_data">
+    <wsdl:part name="get_user_data" element="tns:get_user_data" />
+  </wsdl:message>
+  <wsdl:message name="get_user_dataResponse">
+    <wsdl:part name="retorno" element="tns:get_user_dataResponse" />
+  </wsdl:message>
+  <wsdl:message name="get_xml">
+    <wsdl:part name="get_xml" element="tns:get_xml" />
+  </wsdl:message>
+  <wsdl:message name="get_xmlResponse">
+    <wsdl:part name="retorno" element="tns:get_xmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="responde_indisponibilidade">
+    <wsdl:part name="responde_indisponibilidade" element="tns:responde_indisponibilidade" />
+  </wsdl:message>
+  <wsdl:message name="responde_indisponibilidadeResponse">
+    <wsdl:part name="retorno" element="tns:responde_indisponibilidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="pesquisa">
+    <wsdl:part name="pesquisa" element="tns:pesquisa" />
+  </wsdl:message>
+  <wsdl:message name="pesquisaResponse">
+    <wsdl:part name="retorno" element="tns:pesquisaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="serv">
+    <wsdl:operation name="challenge_generator">
+      <wsdl:input wsaw:Action="urn:challenge_generator" message="tns:challenge_generator" />
+      <wsdl:output wsaw:Action="urn:challenge_generatorResponse" message="tns:challenge_generatorResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="auth">
+      <wsdl:input wsaw:Action="urn:auth" message="tns:auth" />
+      <wsdl:output wsaw:Action="urn:authResponse" message="tns:authResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="get_user_data">
+      <wsdl:input wsaw:Action="urn:get_user_data" message="tns:get_user_data" />
+      <wsdl:output wsaw:Action="urn:get_user_dataResponse" message="tns:get_user_dataResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="get_xml">
+      <wsdl:input wsaw:Action="urn:get_xml" message="tns:get_xml" />
+      <wsdl:output wsaw:Action="urn:get_xmlResponse" message="tns:get_xmlResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="responde_indisponibilidade">
+      <wsdl:input wsaw:Action="urn:responde_indisponibilidade" message="tns:responde_indisponibilidade" />
+      <wsdl:output wsaw:Action="urn:responde_indisponibilidadeResponse" message="tns:responde_indisponibilidadeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="pesquisa">
+      <wsdl:input wsaw:Action="urn:pesquisa" message="tns:pesquisa" />
+      <wsdl:output wsaw:Action="urn:pesquisaResponse" message="tns:pesquisaResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="serv" type="tns:serv">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="challenge_generator">
+      <soap:operation soapAction="urn:challenge_generator" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="auth">
+      <soap:operation soapAction="urn:auth" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_user_data">
+      <soap:operation soapAction="urn:get_user_data" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_xml">
+      <soap:operation soapAction="urn:get_xml" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="responde_indisponibilidade">
+      <soap:operation soapAction="urn:responde_indisponibilidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pesquisa">
+      <soap:operation soapAction="urn:pesquisa" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="serv">
+    <wsdl:port name="serv" binding="tns:serv">
+      <soap:address location="http://www.indisponibilidade.org.br/wsdl/server/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
